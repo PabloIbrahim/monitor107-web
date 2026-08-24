@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MONITOR107</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f6f8;
+            color: #1f2933;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 20px;
+        }
+
+        /* --------------------------------------------------
+           ENCABEZADO
+        -------------------------------------------------- */
+
+        .encabezado {
+            background: #ffffff;
+
+            border-radius: 12px;
+
+            padding: 20px 24px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .titulo {
+            margin: 0;
+
+            font-size: 30px;
+            font-weight: 700;
+
+            color: #17202a;
+        }
+
+        .subtitulo {
+            margin-top: 6px;
+
+            font-size: 16px;
+
+            color: #6b7280;
+        }
+
+        /* --------------------------------------------------
+           ESTADO GENERAL
+        -------------------------------------------------- */
+
+        .estado-general {
+            background: #ffffff;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .estado-numero {
+            font-size: 58px;
+
+            font-weight: 800;
+
+            line-height: 1;
+
+            margin-bottom: 10px;
+        }
+
+        .estado-texto {
+            font-size: 24px;
+
+            font-weight: 700;
+        }
+
+        .estado-detalle {
+            margin-top: 10px;
+
+            font-size: 14px;
+
+            color: #6b7280;
+        }
+
+        .operativo {
+            color: #15803d;
+        }
+
+        .no-operativo {
+            color: #dc2626;
+        }
+
+        .desconectado {
+            color: #d97706;
+        }
+
+        /* --------------------------------------------------
+           NODOS
+        -------------------------------------------------- */
+
+        .seccion-titulo {
+            margin: 25px 0 12px 2px;
+
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+        .nodos {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(260px, 1fr)
+                );
+
+            gap: 16px;
+        }
+
+        .nodo {
+            background: #ffffff;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+
+            border-left: 6px solid #9ca3af;
+        }
+
+        .nodo.operativo {
+            border-left-color: #16a34a;
+        }
+
+        .nodo.no-operativo {
+            border-left-color: #dc2626;
+        }
+
+        .nodo.desconectado {
+            border-left-color: #d97706;
+        }
+
+        .nodo-nombre {
+            font-size: 20px;
+
+            font-weight: 700;
+
+            margin-bottom: 12px;
+        }
+
+        .nodo-estado {
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+        .nodo-actualizacion {
+            margin-top: 12px;
+
+            font-size: 13px;
+
+            color: #6b7280;
+        }
+
+        /* --------------------------------------------------
+           MENSAJE DE ERROR
+        -------------------------------------------------- */
+
+        .error {
+            background: #fff7ed;
+
+            border: 1px solid #fdba74;
+
+            color: #9a3412;
+
+            border-radius: 10px;
+
+            padding: 15px;
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+        .oculto {
+            display: none;
+        }
+
+        /* --------------------------------------------------
+           PIE
+        -------------------------------------------------- */
+
+        .pie {
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            font-size: 13px;
+
+            color: #6b7280;
+        }
+
+        /* --------------------------------------------------
+           RESPONSIVE
+        -------------------------------------------------- */
+
+        @media (max-width: 600px) {
+
+            .contenedor {
+                padding: 12px;
+            }
+
+            .titulo {
+                font-size: 24px;
+            }
+
+            .estado-numero {
+                font-size: 48px;
+            }
+
+            .estado-texto {
+                font-size: 20px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <!-- ==================================================
+         ENCABEZADO
+    =================================================== -->
+
+    <div class="encabezado">
+
+        <h1 class="titulo">
+            MONITOR107
+        </h1>
+
+        <div class="subtitulo">
+            Estado de Nodos
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         ESTADO GENERAL
+    =================================================== -->
+
+    <div
+        id="estadoGeneral"
+        class="estado-general"
+    >
+
+        <div
+            id="estadoNumero"
+            class="estado-numero"
+        >
+            -
+        </div>
+
+        <div
+            id="estadoTexto"
+            class="estado-texto"
+        >
+            Actualizando...
+        </div>
+
+        <div
+            id="estadoDetalle"
+            class="estado-detalle"
+        >
+            Consultando servidor MONITOR107...
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         ERROR
+    =================================================== -->
+
+    <div
+        id="mensajeError"
+        class="error oculto"
+    >
+        No se pudo obtener el estado del servidor.
+    </div>
+
+
+    <!-- ==================================================
+         NODOS
+    =================================================== -->
+
+    <div class="seccion-titulo">
+        Nodos
+    </div>
+
+    <div
+        id="nodos"
+        class="nodos"
+    >
+        <!-- Los nodos se generan dinámicamente -->
+    </div>
+
+
+    <!-- ==================================================
+         PIE
+    =================================================== -->
+
+    <div class="pie">
+
+        MONITOR107 — Sistema de monitoreo
+
+        <br>
+
+        <span id="ultimaConsulta">
+            Última consulta: -
+        </span>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+============================================================
+ MONITOR107
+ Interfaz Web
+============================================================
+
+ La URL NO está definida aquí.
+
+ Se obtiene desde:
+
+     monitor107-config.json
+
+ Ejemplo:
+
+ {
+     "api_url":
+       "https://xxxxx.trycloudflare.com",
+
+     "api_resumen":
+       "/api/resumen",
+
+     "intervalo_ms":
+       10000
+ }
+
+============================================================
+*/
+
+
+let configuracion = null;
+
+let temporizador = null;
+
+
+/* ========================================================
+   CARGAR CONFIGURACIÓN
+======================================================== */
+
+async function cargarConfiguracion() {
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "monitor107-config.json?t=" +
+                Date.now(),
+                {
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudo cargar monitor107-config.json"
+            );
+
+        }
+
+
+        configuracion =
+            await respuesta.json();
+
+
+        validarConfiguracion();
+
+
+        console.log(
+            "Configuración MONITOR107 cargada:",
+            configuracion
+        );
+
+
+        iniciarMonitoreo();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Error cargando configuración:",
+            error
+        );
+
+
+        mostrarError(
+            "No se pudo cargar la configuración de MONITOR107."
+        );
+
+    }
+
+}
+
+
+/* ========================================================
+   VALIDAR CONFIGURACIÓN
+======================================================== */
+
+function validarConfiguracion() {
+
+    if (!configuracion) {
+
+        throw new Error(
+            "Configuración vacía."
+        );
+
+    }
+
+
+    if (!configuracion.api_url) {
+
+        throw new Error(
+            "Falta api_url en monitor107-config.json."
+        );
+
+    }
+
+
+    if (!configuracion.api_resumen) {
+
+        throw new Error(
+            "Falta api_resumen en monitor107-config.json."
+        );
+
+    }
+
+
+    if (!configuracion.intervalo_ms) {
+
+        configuracion.intervalo_ms =
+            10000;
+
+    }
+
+}
+
+
+/* ========================================================
+   CONSTRUIR URL API
+======================================================== */
+
+function obtenerUrlAPI() {
+
+    let base =
+        configuracion.api_url;
+
+
+    let endpoint =
+        configuracion.api_resumen;
+
+
+    base =
+        base.replace(
+            /\/$/,
+            ""
+        );
+
+
+    if (!endpoint.startsWith("/")) {
+
+        endpoint =
+            "/" + endpoint;
+
+    }
+
+
+    return base + endpoint;
+
+}
+
+
+/* ========================================================
+   INICIAR MONITOREO
+======================================================== */
+
+function iniciarMonitoreo() {
+
+    consultarEstado();
+
+
+    if (temporizador) {
+
+        clearInterval(
+            temporizador
+        );
+
+    }
+
+
+    temporizador =
+        setInterval(
+            consultarEstado,
+            configuracion.intervalo_ms
+        );
+
+}
+
+
+/* ========================================================
+   CONSULTAR API
+======================================================== */
+
+async function consultarEstado() {
+
+    if (!configuracion) {
+
+        return;
+
+    }
+
+
+    const url =
+        obtenerUrlAPI();
+
+
+    console.log(
+        "Consultando:",
+        url
+    );
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                url +
+                "?t=" +
+                Date.now(),
+                {
+                    method: "GET",
+
+                    cache: "no-store",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    }
+                }
+            );
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "HTTP " +
+                respuesta.status
+            );
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        console.log(
+            "Respuesta API:",
+            datos
+        );
+
+
+        if (!datos.ok) {
+
+            throw new Error(
+                "La API respondió ok=false"
+            );
+
+        }
+
+
+        procesarEstado(
+            datos
+        );
+
+
+        ocultarError();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Error consultando API:",
+            error
+        );
+
+
+        mostrarError(
+            "No se pudo obtener el estado del servidor."
+        );
+
+
+        mostrarEstadoServidorNoDisponible();
+
+    }
+
+}
+
+
+/* ========================================================
+   PROCESAR ESTADO
+======================================================== */
+
+function procesarEstado(datos) {
+
+    const nodos =
+        Array.isArray(datos.nodos)
+            ? datos.nodos
+            : [];
+
+
+    /*
+    --------------------------------------------------------
+    ESTADO GENERAL
+
+    Se utiliza exclusivamente:
+
+        operativo = 1
+        operativo = 0
+
+    --------------------------------------------------------
+    */
+
+
+    let total =
+        nodos.length;
+
+
+    let nodosOperativos =
+        nodos.filter(
+            nodo =>
+                Number(nodo.operativo) === 1
+                &&
+                nodo.online !== false
+        ).length;
+
+
+    /*
+    Si no hay nodos, el sistema no puede considerarse
+    operativo.
+    */
+
+
+    let estadoGeneral =
+        total > 0
+        &&
+        nodosOperativos === total;
+
+
+    actualizarEstadoGeneral(
+        estadoGeneral,
+        total,
+        nodosOperativos
+    );
+
+
+    mostrarNodos(
+        nodos
+    );
+
+
+    actualizarUltimaConsulta(
+        datos.fecha_hora
+    );
+
+}
+
+
+/* ========================================================
+   ESTADO GENERAL
+======================================================== */
+
+function actualizarEstadoGeneral(
+    operativo,
+    total,
+    operativos
+) {
+
+    const numero =
+        document.getElementById(
+            "estadoNumero"
+        );
+
+
+    const texto =
+        document.getElementById(
+            "estadoTexto"
+        );
+
+
+    const detalle =
+        document.getElementById(
+            "estadoDetalle"
+        );
+
+
+    numero.className =
+        "estado-numero";
+
+
+    texto.className =
+        "estado-texto";
+
+
+    if (operativo) {
+
+        numero.textContent =
+            "1";
+
+        numero.classList.add(
+            "operativo"
+        );
+
+
+        texto.textContent =
+            "OPERATIVO";
+
+        texto.classList.add(
+            "operativo"
+        );
+
+
+        detalle.textContent =
+            operativos +
+            " de " +
+            total +
+            " nodos operativos.";
+
+    }
+
+    else {
+
+        numero.textContent =
+            "0";
+
+        numero.classList.add(
+            "no-operativo"
+        );
+
+
+        texto.textContent =
+            "NO OPERATIVO";
+
+        texto.classList.add(
+            "no-operativo"
+        );
+
+
+        detalle.textContent =
+            operativos +
+            " de " +
+            total +
+            " nodos operativos.";
+
+    }
+
+}
+
+
+/* ========================================================
+   MOSTRAR NODOS
+======================================================== */
+
+function mostrarNodos(nodos) {
+
+    const contenedor =
+        document.getElementById(
+            "nodos"
+        );
+
+
+    contenedor.innerHTML =
+        "";
+
+
+    if (nodos.length === 0) {
+
+        contenedor.innerHTML =
+
+            '<div class="error">' +
+            'No hay nodos registrados.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    nodos.forEach(
+        nodo => {
+
+            const tarjeta =
+                document.createElement(
+                    "div"
+                );
+
+
+            const operativo =
+                Number(
+                    nodo.operativo
+                ) === 1
+                &&
+                nodo.online !== false;
+
+
+            const online =
+                nodo.online !== false;
+
+
+            let clase =
+                "nodo";
+
+
+            if (!online) {
+
+                clase +=
+                    " desconectado";
+
+            }
+
+            else if (operativo) {
+
+                clase +=
+                    " operativo";
+
+            }
+
+            else {
+
+                clase +=
+                    " no-operativo";
+
+            }
+
+
+            tarjeta.className =
+                clase;
+
+
+            const nombre =
+                nodo.nombre ||
+                nodo.id ||
+                "Nodo";
+
+
+            const estado =
+                operativo
+                    ? "OPERATIVO"
+                    : "NO OPERATIVO";
+
+
+            const estadoClase =
+                operativo
+                    ? "operativo"
+                    : "no-operativo";
+
+
+            const actualizacion =
+                formatearFecha(
+                    nodo.ultima_actualizacion
+                );
+
+
+            tarjeta.innerHTML =
+
+                '<div class="nodo-nombre">' +
+
+                    escaparHTML(
+                        nombre
+                    ) +
+
+                '</div>' +
+
+
+                '<div class="nodo-estado ' +
+                    estadoClase +
+                '">' +
+
+                    estado +
+
+                '</div>' +
+
+
+                '<div class="nodo-actualizacion">' +
+
+                    (
+                        online
+                        ? "Última actualización: "
+                        : "Nodo sin conexión. Última actualización: "
+                    ) +
+
+                    escaparHTML(
+                        actualizacion
+                    ) +
+
+                '</div>';
+
+
+            contenedor.appendChild(
+                tarjeta
+            );
+
+        }
+    );
+
+}
+
+
+/* ========================================================
+   SERVIDOR NO DISPONIBLE
+======================================================== */
+
+function mostrarEstadoServidorNoDisponible() {
+
+    const numero =
+        document.getElementById(
+            "estadoNumero"
+        );
+
+
+    const texto =
+        document.getElementById(
+            "estadoTexto"
+        );
+
+
+    const detalle =
+        document.getElementById(
+            "estadoDetalle"
+        );
+
+
+    numero.className =
+        "estado-numero desconectado";
+
+
+    numero.textContent =
+        "0";
+
+
+    texto.className =
+        "estado-texto desconectado";
+
+
+    texto.textContent =
+        "NO OPERATIVO";
+
+
+    detalle.textContent =
+        "No se pudo obtener información del servidor.";
+
+}
+
+
+/* ========================================================
+   MOSTRAR ERROR
+======================================================== */
+
+function mostrarError(mensaje) {
+
+    const elemento =
+        document.getElementById(
+            "mensajeError"
+        );
+
+
+    elemento.textContent =
+        mensaje;
+
+
+    elemento.classList.remove(
+        "oculto"
+    );
+
+}
+
+
+/* ========================================================
+   OCULTAR ERROR
+======================================================== */
+
+function ocultarError() {
+
+    const elemento =
+        document.getElementById(
+            "mensajeError"
+        );
+
+
+    elemento.classList.add(
+        "oculto"
+    );
+
+}
+
+
+/* ========================================================
+   ÚLTIMA CONSULTA
+======================================================== */
+
+function actualizarUltimaConsulta(
+    fecha
+) {
+
+    const elemento =
+        document.getElementById(
+            "ultimaConsulta"
+        );
+
+
+    elemento.textContent =
+        "Última consulta: " +
+        formatearFecha(
+            fecha
+        );
+
+}
+
+
+/* ========================================================
+   FORMATEAR FECHA
+======================================================== */
+
+function formatearFecha(
+    fecha
+) {
+
+    if (!fecha) {
+
+        return "-";
+
+    }
+
+
+    try {
+
+        const fechaObj =
+            new Date(
+                fecha
+            );
+
+
+        if (
+            isNaN(
+                fechaObj.getTime()
+            )
+        ) {
+
+            return fecha;
+
+        }
+
+
+        return fechaObj.toLocaleString(
+            "es-AR",
+            {
+                dateStyle: "short",
+                timeStyle: "medium"
+            }
+        );
+
+    }
+
+    catch {
+
+        return fecha;
+
+    }
+
+}
+
+
+/* ========================================================
+   SEGURIDAD HTML
+======================================================== */
+
+function escaparHTML(
+    texto
+) {
+
+    return String(
+        texto
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* ========================================================
+   INICIO
+======================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        cargarConfiguracion();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

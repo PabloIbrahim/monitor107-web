@@ -1,0 +1,5 @@
+{
+    "api_url": "https://monitor107-api.onrender.com",
+    "api_resumen": "/api/resumen",
+    "intervalo_ms": 10000
+}
