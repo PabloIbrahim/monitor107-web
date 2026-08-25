@@ -75,7 +75,7 @@
         }
 
         /* ==================================================
-           RESUMEN GENERAL
+           RESUMEN DE NODOS
         ================================================== */
 
         .resumen {
@@ -86,7 +86,7 @@
 
             gap: 16px;
 
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .resumen-card {
@@ -143,66 +143,11 @@
         }
 
         /* ==================================================
-           ESTADO GENERAL
-        ================================================== */
-
-        .estado-general {
-            background: #ffffff;
-
-            border-radius: 12px;
-
-            padding: 22px;
-
-            margin-bottom: 20px;
-
-            text-align: center;
-
-            box-shadow:
-                0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .estado-numero {
-            font-size: 48px;
-
-            font-weight: 800;
-
-            line-height: 1;
-
-            margin-bottom: 8px;
-        }
-
-        .estado-texto {
-            font-size: 22px;
-
-            font-weight: 700;
-        }
-
-        .estado-detalle {
-            margin-top: 8px;
-
-            font-size: 14px;
-
-            color: #6b7280;
-        }
-
-        .operativo {
-            color: #15803d;
-        }
-
-        .no-operativo {
-            color: #dc2626;
-        }
-
-        .desconectado {
-            color: #d97706;
-        }
-
-        /* ==================================================
            NODOS
         ================================================== */
 
         .seccion-titulo {
-            margin: 25px 0 12px 2px;
+            margin: 10px 0 12px 2px;
 
             font-size: 20px;
 
@@ -268,6 +213,18 @@
             color: #6b7280;
         }
 
+        .operativo {
+            color: #15803d;
+        }
+
+        .no-operativo {
+            color: #dc2626;
+        }
+
+        .desconectado {
+            color: #d97706;
+        }
+
         /* ==================================================
            MENSAJE DE ERROR
         ================================================== */
@@ -328,14 +285,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .estado-numero {
-                font-size: 42px;
-            }
-
-            .estado-texto {
-                font-size: 20px;
-            }
-
         }
 
     </style>
@@ -366,7 +315,7 @@
 
 
     <!-- ==================================================
-         RESUMEN DE NODOS
+         RESUMEN
     ================================================== -->
 
     <div class="resumen">
@@ -416,39 +365,6 @@
                 Total de Nodos
             </div>
 
-        </div>
-
-    </div>
-
-
-    <!-- ==================================================
-         ESTADO GENERAL
-    ================================================== -->
-
-    <div
-        id="estadoGeneral"
-        class="estado-general"
-    >
-
-        <div
-            id="estadoNumero"
-            class="estado-numero"
-        >
-            -
-        </div>
-
-        <div
-            id="estadoTexto"
-            class="estado-texto"
-        >
-            Actualizando...
-        </div>
-
-        <div
-            id="estadoDetalle"
-            class="estado-detalle"
-        >
-            Consultando servidor MONITOR107...
         </div>
 
     </div>
@@ -554,12 +470,6 @@ async function cargarConfiguracion() {
 
 
         validarConfiguracion();
-
-
-        console.log(
-            "Configuración MONITOR107 cargada:",
-            configuracion
-        );
 
 
         iniciarMonitoreo();
@@ -704,12 +614,6 @@ async function consultarEstado() {
         obtenerUrlAPI();
 
 
-    console.log(
-        "Consultando:",
-        url
-    );
-
-
     try {
 
         const respuesta =
@@ -744,12 +648,6 @@ async function consultarEstado() {
             await respuesta.json();
 
 
-        console.log(
-            "Respuesta API:",
-            datos
-        );
-
-
         if (!datos.ok) {
 
             throw new Error(
@@ -780,9 +678,6 @@ async function consultarEstado() {
             "No se pudo obtener el estado del servidor."
         );
 
-
-        mostrarEstadoServidorNoDisponible();
-
     }
 
 }
@@ -804,19 +699,6 @@ function procesarEstado(datos) {
         nodos.length;
 
 
-    /*
-    ========================================================
-    NODOS OPERATIVOS
-
-    Un nodo se considera operativo solamente cuando:
-
-        operativo = 1
-
-    y además está online.
-
-    ========================================================
-    */
-
     const nodosOperativos =
         nodos.filter(
             nodo =>
@@ -825,17 +707,6 @@ function procesarEstado(datos) {
                 nodo.online !== false
         ).length;
 
-
-    /*
-    ========================================================
-    NODOS NO OPERATIVOS
-
-    Incluye:
-
-        - operativo = 0
-        - nodo offline
-    ========================================================
-    */
 
     const nodosNoOperativos =
         total -
@@ -846,19 +717,6 @@ function procesarEstado(datos) {
         total,
         nodosOperativos,
         nodosNoOperativos
-    );
-
-
-    const sistemaOperativo =
-        total > 0
-        &&
-        nodosOperativos === total;
-
-
-    actualizarEstadoGeneral(
-        sistemaOperativo,
-        total,
-        nodosOperativos
     );
 
 
@@ -900,97 +758,6 @@ function actualizarResumen(
         "cantidadTotal"
     ).textContent =
         total;
-
-}
-
-
-/* ========================================================
-   ESTADO GENERAL
-======================================================== */
-
-function actualizarEstadoGeneral(
-    operativo,
-    total,
-    operativos
-) {
-
-    const numero =
-        document.getElementById(
-            "estadoNumero"
-        );
-
-
-    const texto =
-        document.getElementById(
-            "estadoTexto"
-        );
-
-
-    const detalle =
-        document.getElementById(
-            "estadoDetalle"
-        );
-
-
-    numero.className =
-        "estado-numero";
-
-
-    texto.className =
-        "estado-texto";
-
-
-    if (operativo) {
-
-        numero.textContent =
-            "1";
-
-        numero.classList.add(
-            "operativo"
-        );
-
-
-        texto.textContent =
-            "SISTEMA OPERATIVO";
-
-        texto.classList.add(
-            "operativo"
-        );
-
-
-        detalle.textContent =
-            operativos +
-            " de " +
-            total +
-            " nodos operativos.";
-
-    }
-
-    else {
-
-        numero.textContent =
-            "0";
-
-        numero.classList.add(
-            "no-operativo"
-        );
-
-
-        texto.textContent =
-            "SISTEMA NO OPERATIVO";
-
-        texto.classList.add(
-            "no-operativo"
-        );
-
-
-        detalle.textContent =
-            operativos +
-            " de " +
-            total +
-            " nodos operativos.";
-
-    }
 
 }
 
@@ -1164,52 +931,6 @@ function mostrarNodos(nodos) {
 
         }
     );
-
-}
-
-
-/* ========================================================
-   SERVIDOR NO DISPONIBLE
-======================================================== */
-
-function mostrarEstadoServidorNoDisponible() {
-
-    const numero =
-        document.getElementById(
-            "estadoNumero"
-        );
-
-
-    const texto =
-        document.getElementById(
-            "estadoTexto"
-        );
-
-
-    const detalle =
-        document.getElementById(
-            "estadoDetalle"
-        );
-
-
-    numero.className =
-        "estado-numero desconectado";
-
-
-    numero.textContent =
-        "0";
-
-
-    texto.className =
-        "estado-texto desconectado";
-
-
-    texto.textContent =
-        "SERVIDOR NO DISPONIBLE";
-
-
-    detalle.textContent =
-        "No se pudo obtener información del servidor.";
 
 }
 
