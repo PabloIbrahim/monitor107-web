@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -38,9 +40,9 @@
             padding: 20px;
         }
 
-        /* --------------------------------------------------
+        /* ==================================================
            ENCABEZADO
-        -------------------------------------------------- */
+        ================================================== */
 
         .encabezado {
             background: #ffffff;
@@ -72,16 +74,84 @@
             color: #6b7280;
         }
 
-        /* --------------------------------------------------
+        /* ==================================================
+           RESUMEN GENERAL
+        ================================================== */
+
+        .resumen {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 20px;
+        }
+
+        .resumen-card {
+            background: #ffffff;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            text-align: center;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .resumen-numero {
+            font-size: 48px;
+
+            font-weight: 800;
+
+            line-height: 1;
+
+            margin-bottom: 8px;
+        }
+
+        .resumen-texto {
+            font-size: 16px;
+
+            font-weight: 700;
+        }
+
+        .resumen-operativo {
+            border-top: 5px solid #16a34a;
+        }
+
+        .resumen-no-operativo {
+            border-top: 5px solid #dc2626;
+        }
+
+        .resumen-total {
+            border-top: 5px solid #6b7280;
+        }
+
+        .resumen-operativo .resumen-numero {
+            color: #15803d;
+        }
+
+        .resumen-no-operativo .resumen-numero {
+            color: #dc2626;
+        }
+
+        .resumen-total .resumen-numero {
+            color: #374151;
+        }
+
+        /* ==================================================
            ESTADO GENERAL
-        -------------------------------------------------- */
+        ================================================== */
 
         .estado-general {
             background: #ffffff;
 
             border-radius: 12px;
 
-            padding: 25px;
+            padding: 22px;
 
             margin-bottom: 20px;
 
@@ -92,23 +162,23 @@
         }
 
         .estado-numero {
-            font-size: 58px;
+            font-size: 48px;
 
             font-weight: 800;
 
             line-height: 1;
 
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .estado-texto {
-            font-size: 24px;
+            font-size: 22px;
 
             font-weight: 700;
         }
 
         .estado-detalle {
-            margin-top: 10px;
+            margin-top: 8px;
 
             font-size: 14px;
 
@@ -127,9 +197,9 @@
             color: #d97706;
         }
 
-        /* --------------------------------------------------
+        /* ==================================================
            NODOS
-        -------------------------------------------------- */
+        ================================================== */
 
         .seccion-titulo {
             margin: 25px 0 12px 2px;
@@ -198,9 +268,9 @@
             color: #6b7280;
         }
 
-        /* --------------------------------------------------
+        /* ==================================================
            MENSAJE DE ERROR
-        -------------------------------------------------- */
+        ================================================== */
 
         .error {
             background: #fff7ed;
@@ -224,9 +294,9 @@
             display: none;
         }
 
-        /* --------------------------------------------------
+        /* ==================================================
            PIE
-        -------------------------------------------------- */
+        ================================================== */
 
         .pie {
             text-align: center;
@@ -240,11 +310,11 @@
             color: #6b7280;
         }
 
-        /* --------------------------------------------------
+        /* ==================================================
            RESPONSIVE
-        -------------------------------------------------- */
+        ================================================== */
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
 
             .contenedor {
                 padding: 12px;
@@ -254,8 +324,12 @@
                 font-size: 24px;
             }
 
+            .resumen {
+                grid-template-columns: 1fr;
+            }
+
             .estado-numero {
-                font-size: 48px;
+                font-size: 42px;
             }
 
             .estado-texto {
@@ -265,15 +339,18 @@
         }
 
     </style>
+
 </head>
+
 
 <body>
 
 <div class="contenedor">
 
+
     <!-- ==================================================
          ENCABEZADO
-    =================================================== -->
+    ================================================== -->
 
     <div class="encabezado">
 
@@ -289,8 +366,64 @@
 
 
     <!-- ==================================================
+         RESUMEN DE NODOS
+    ================================================== -->
+
+    <div class="resumen">
+
+        <div class="resumen-card resumen-operativo">
+
+            <div
+                id="cantidadOperativos"
+                class="resumen-numero"
+            >
+                0
+            </div>
+
+            <div class="resumen-texto">
+                Nodos Operativos
+            </div>
+
+        </div>
+
+
+        <div class="resumen-card resumen-no-operativo">
+
+            <div
+                id="cantidadNoOperativos"
+                class="resumen-numero"
+            >
+                0
+            </div>
+
+            <div class="resumen-texto">
+                Nodos No Operativos
+            </div>
+
+        </div>
+
+
+        <div class="resumen-card resumen-total">
+
+            <div
+                id="cantidadTotal"
+                class="resumen-numero"
+            >
+                0
+            </div>
+
+            <div class="resumen-texto">
+                Total de Nodos
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
          ESTADO GENERAL
-    =================================================== -->
+    ================================================== -->
 
     <div
         id="estadoGeneral"
@@ -323,7 +456,7 @@
 
     <!-- ==================================================
          ERROR
-    =================================================== -->
+    ================================================== -->
 
     <div
         id="mensajeError"
@@ -335,7 +468,7 @@
 
     <!-- ==================================================
          NODOS
-    =================================================== -->
+    ================================================== -->
 
     <div class="seccion-titulo">
         Nodos
@@ -351,7 +484,7 @@
 
     <!-- ==================================================
          PIE
-    =================================================== -->
+    ================================================== -->
 
     <div class="pie">
 
@@ -376,24 +509,9 @@
  Interfaz Web
 ============================================================
 
- La URL NO está definida aquí.
-
- Se obtiene desde:
+ La URL se obtiene desde:
 
      monitor107-config.json
-
- Ejemplo:
-
- {
-     "api_url":
-       "https://xxxxx.trycloudflare.com",
-
-     "api_resumen":
-       "/api/resumen",
-
-     "intervalo_ms":
-       10000
- }
 
 ============================================================
 */
@@ -501,7 +619,7 @@ function validarConfiguracion() {
     if (!configuracion.intervalo_ms) {
 
         configuracion.intervalo_ms =
-            10000;
+            60000;
 
     }
 
@@ -682,24 +800,24 @@ function procesarEstado(datos) {
             : [];
 
 
-    /*
-    --------------------------------------------------------
-    ESTADO GENERAL
-
-    Se utiliza exclusivamente:
-
-        operativo = 1
-        operativo = 0
-
-    --------------------------------------------------------
-    */
-
-
-    let total =
+    const total =
         nodos.length;
 
 
-    let nodosOperativos =
+    /*
+    ========================================================
+    NODOS OPERATIVOS
+
+    Un nodo se considera operativo solamente cuando:
+
+        operativo = 1
+
+    y además está online.
+
+    ========================================================
+    */
+
+    const nodosOperativos =
         nodos.filter(
             nodo =>
                 Number(nodo.operativo) === 1
@@ -709,19 +827,36 @@ function procesarEstado(datos) {
 
 
     /*
-    Si no hay nodos, el sistema no puede considerarse
-    operativo.
+    ========================================================
+    NODOS NO OPERATIVOS
+
+    Incluye:
+
+        - operativo = 0
+        - nodo offline
+    ========================================================
     */
 
+    const nodosNoOperativos =
+        total -
+        nodosOperativos;
 
-    let estadoGeneral =
+
+    actualizarResumen(
+        total,
+        nodosOperativos,
+        nodosNoOperativos
+    );
+
+
+    const sistemaOperativo =
         total > 0
         &&
         nodosOperativos === total;
 
 
     actualizarEstadoGeneral(
-        estadoGeneral,
+        sistemaOperativo,
         total,
         nodosOperativos
     );
@@ -735,6 +870,36 @@ function procesarEstado(datos) {
     actualizarUltimaConsulta(
         datos.fecha_hora
     );
+
+}
+
+
+/* ========================================================
+   ACTUALIZAR RESUMEN
+======================================================== */
+
+function actualizarResumen(
+    total,
+    operativos,
+    noOperativos
+) {
+
+    document.getElementById(
+        "cantidadOperativos"
+    ).textContent =
+        operativos;
+
+
+    document.getElementById(
+        "cantidadNoOperativos"
+    ).textContent =
+        noOperativos;
+
+
+    document.getElementById(
+        "cantidadTotal"
+    ).textContent =
+        total;
 
 }
 
@@ -786,7 +951,7 @@ function actualizarEstadoGeneral(
 
 
         texto.textContent =
-            "OPERATIVO";
+            "SISTEMA OPERATIVO";
 
         texto.classList.add(
             "operativo"
@@ -812,7 +977,7 @@ function actualizarEstadoGeneral(
 
 
         texto.textContent =
-            "NO OPERATIVO";
+            "SISTEMA NO OPERATIVO";
 
         texto.classList.add(
             "no-operativo"
@@ -916,16 +1081,40 @@ function mostrarNodos(nodos) {
                 "Nodo";
 
 
-            const estado =
-                operativo
-                    ? "OPERATIVO"
-                    : "NO OPERATIVO";
+            let estado;
+
+            let estadoClase;
 
 
-            const estadoClase =
-                operativo
-                    ? "operativo"
-                    : "no-operativo";
+            if (!online) {
+
+                estado =
+                    "NO OPERATIVO";
+
+                estadoClase =
+                    "desconectado";
+
+            }
+
+            else if (operativo) {
+
+                estado =
+                    "OPERATIVO";
+
+                estadoClase =
+                    "operativo";
+
+            }
+
+            else {
+
+                estado =
+                    "NO OPERATIVO";
+
+                estadoClase =
+                    "no-operativo";
+
+            }
 
 
             const actualizacion =
@@ -1016,7 +1205,7 @@ function mostrarEstadoServidorNoDisponible() {
 
 
     texto.textContent =
-        "NO OPERATIVO";
+        "SERVIDOR NO DISPONIBLE";
 
 
     detalle.textContent =
@@ -1194,4 +1383,6 @@ document.addEventListener(
 </script>
 
 </body>
+
 </html>
+```
